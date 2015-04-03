@@ -4,7 +4,7 @@ class Yhxt extends CI_Model{
 		parent::__construct();
 		$this->load->database();
 	}
-	//checkin model
+	//user checkin model
 	function checkin($email,$password){			
 		$query=$this->db->query('select * from master where email="'.$email.'" and password="'.md5($password).'"');
 		if ($query->num_rows()>0){
@@ -15,10 +15,25 @@ class Yhxt extends CI_Model{
 			return  false;
 		}
 	}
-	
-	//register model
+	//customer checkin
+	function checkinc($email,$password){
+		$query=$this->db->query('select * from customer where email="'.$email.'" and password="'.md5($password).'"');
+		if ($query->num_rows()>0){
+			$row=$query->row();
+			return $row;
+		}
+		else {
+			return  false;
+		}
+	}
+	//user register model
 	function register($info){
 		$sql="insert into master(password,email) values(?,?)";
+		return $this->db->query($sql,$info);
+	}
+	//customer register 
+	function  registerc($info){
+		$sql="insert into customer(email,cname,sex,phone,shen,shi,xian,password) values(?,?,?,?,?,?,?,?)";
 		return $this->db->query($sql,$info);
 	}
 	//find the specified User
