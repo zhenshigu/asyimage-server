@@ -4,14 +4,14 @@ class  ResturantManage extends CI_Controller{
 	function setResturant(){
 		if (!isset($_SESSION)){
 			session_start();
-			$_SESSION['uid']=3;
+			$_SESSION['uid']=5;
 		}
 		$this->load->library('form_validation');
   		$this->form_validation->set_rules('rname', 'Rname', 'trim|required');
 	  	$this->form_validation->set_rules('telephone', 'Tel', 'trim|required|min_length[7]');
-	  	$this->form_validation->set_rules('shen', 'Shen', 'trim|required');
-	  	$this->form_validation->set_rules('shi', 'Shi', 'trim|required');
-	  	$this->form_validation->set_rules('xian', 'Xian', 'trim|required');
+//	  	$this->form_validation->set_rules('shen', 'Shen', 'trim|required');
+//	  	$this->form_validation->set_rules('shi', 'Shi', 'trim|required');
+//	  	$this->form_validation->set_rules('xian', 'Xian', 'trim|required');
 		  if ($this->form_validation->run() == FALSE)
 		  {
 		  	$this->load->view('webviews/resturant');
@@ -58,7 +58,7 @@ class  ResturantManage extends CI_Controller{
 			     echo '移动文件失败！'; 
 			     exit; 
 			    } else {
-			    	$data['image']="http://localhost:8080/DingCan/resource/res_img/{$_SESSION['uid']}.{$_FILES['file']['name']}";
+			    	$data['image']="http://10.0.2.2:8080/DingCan/resource/res_img/{$_SESSION['uid']}{$_FILES['file']['name']}";
 			    	$data['uid']=$_SESSION['uid'];
 			    	$this->load->model('rescai');
 			    	if ($this->rescai->setRes($data)){
