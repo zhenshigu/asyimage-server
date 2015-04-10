@@ -17,7 +17,7 @@ class Yhxt extends CI_Model{
 	}
 	//customer checkin
 	function checkinc($email,$password){
-		$query=$this->db->query('select * from customer where email="'.$email.'" and password="'.md5($password).'"');
+		$query=$this->db->query("select * from customer where email='".$email."' and password='".$password."'");
 		if ($query->num_rows()>0){
 			$row=$query->row();
 			return $row;

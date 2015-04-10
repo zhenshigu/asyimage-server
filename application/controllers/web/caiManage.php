@@ -1,5 +1,6 @@
 <?php
 class CaiManage extends CI_Controller{
+	private $host="http://10.0.2.2:8080/";
 	function addCai(){
 		if (!isset($_SESSION)){
 			session_start();
@@ -55,7 +56,8 @@ class CaiManage extends CI_Controller{
 			     echo '移动文件失败！'; 
 			     exit; 
 			    } else {
-			    	$data['imageurl']="http://localhost:8080/DingCan/resource/cai_img/{$_SESSION['uid']}.{$_FILES['file']['name']}";
+			    	
+			    	$data['imageurl']=$this->host."DingCan/resource/cai_img/{$_SESSION['uid']}{$_FILES['file']['name']}";
 			    	$data['rid']=$_SESSION['rid'];
 			    	$this->load->model('rescai');
 			    	if ($this->rescai->addCai($data)){
@@ -126,7 +128,7 @@ class CaiManage extends CI_Controller{
 			     echo '移动文件失败！'; 
 			     exit; 
 			    } else {
-			    	$data['imageurl']="http://localhost:8080/DingCan/resource/cai_img/{$_SESSION['uid']}.{$_FILES['file']['name']}";
+			    	$data['imageurl']="http://10.0.2.2:8080/DingCan/resource/cai_img/{$_SESSION['uid']}{$_FILES['file']['name']}";
 			    	$data['vid']=$_SESSION['vid'];
 			    	$this->load->model('rescai');
 			    	if ($this->rescai->updateCai($data)){

@@ -132,7 +132,7 @@ class  ResturantManage extends CI_Controller{
 			     echo '移动文件失败！'; 
 			     exit; 
 			    } else {
-			    	$data['image']="http://localhost:8080/DingCan/resource/res_img/{$_SESSION['uid']}.{$_FILES['file']['name']}";
+			    	$data['image']="http://localhost:8080/DingCan/resource/res_img/{$_SESSION['uid']}{$_FILES['file']['name']}";
 			    	$data['uid']=$_SESSION['uid'];
 			    	$this->load->model('rescai');
 			    	if ($this->rescai->updateRes($data)){
