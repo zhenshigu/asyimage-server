@@ -48,7 +48,7 @@ class Yhxt extends CI_Model{
 	}
 	//find user by uid
 	function findUid($uid){
-		$sql="select uid,email,name,sex,tid,age from user where uid=? ";
+		$sql="select * from resturant where uid=? ";
 		$query=$this->db->query($sql,array($uid));
 			if ($query->num_rows()>0){
 			return $query->row();

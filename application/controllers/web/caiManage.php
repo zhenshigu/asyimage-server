@@ -4,8 +4,6 @@ class CaiManage extends CI_Controller{
 	function addCai(){
 		if (!isset($_SESSION)){
 			session_start();
-			$_SESSION['uid']=3;
-			$_SESSION['rid']=1;
 		}
 		$this->load->library('form_validation');
   		$this->form_validation->set_rules('vname', 'Vname', 'trim|required');
@@ -13,10 +11,11 @@ class CaiManage extends CI_Controller{
 	  	$this->form_validation->set_rules('description', 'Description', 'trim|required');
 		  if ($this->form_validation->run() == FALSE)
 		  {
+		  	$this->load->view('webviews/nav');
 		  	$this->load->view('webviews/cai');
 		  }else {
 		  	$data=$this->input->post();
-		  	var_dump($_FILES);
+//		  	var_dump($_FILES);
 //			var_dump($data);
 		  	if($_FILES['file']['error'] > 0){ 
 					   echo '!problem:'; 
@@ -76,8 +75,8 @@ class CaiManage extends CI_Controller{
 	function updateCai(){
 	if (!isset($_SESSION)){
 			session_start();
-			$_SESSION['uid']=3;
-			$_SESSION['vid']=1;
+//			$_SESSION['uid']=3;
+//			$_SESSION['vid']=1;
 		}
 		$this->load->library('form_validation');
   		$this->form_validation->set_rules('vname', 'Vname', 'trim|required');

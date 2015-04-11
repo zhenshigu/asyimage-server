@@ -25,4 +25,26 @@ class  Rescai extends CI_Model{
 		$sql="update caishi set vname=?,price=?,descrition=?,imageurl=? where vid=?";
 		return $this->db->query($sql,$data);
 	}
+	//get cai list
+	function getList($data){
+		$sql="select * from caishi where rid=? limit ?";
+		$query=$this->db->query($sql,$data);
+		return $query->result_array();
+	}
+	//获得某个范围的菜单，用于分页
+	function someCai($from,$pageCount){
+		$sql="select * from caishi  limit ?,?";
+		$query=$this->db->query($sql,array($from,$pageCount));
+		if ($query->num_rows()>0){
+			return $query->result_array();
+		}else {
+			return  FALSE;
+		}
+	}
+	//获得菜单数目
+	function getCount(){
+		$sql="select * from caishi";
+		$query=$this->db->query($sql);
+		return $query->num_rows();
+	}
 }

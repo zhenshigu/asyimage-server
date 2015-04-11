@@ -20,5 +20,8 @@ class CacheT extends CI_Controller{
 		$this->output->cache(5);
 		$this->load->view("ca.php",$data);
 	}
+	function  test(){
+		echo md5("123");
+	}
 }
 
