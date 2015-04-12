@@ -75,8 +75,9 @@
 		if (!isset($_SESSION)){
 			session_start();
 		}
-		$this->load->view("webviews/nav");
+		
 		if (!isset($_SESSION['uid'])){
+			$this->load->view("webviews/nav");
 			echo "还没登陆";
 			exit();
 		}
@@ -87,7 +88,7 @@
 			echo "暂时还没有添加菜单";
 			exit();
 		}
-		$pageCount=2;
+		$pageCount=6;
 		$from=$this->input->get("per_page")+0;
 		if (empty($from)){
 			$from=0;
@@ -99,4 +100,35 @@
 			$this->load->view('webviews/allList',$data);
 		}
 	}
+	//通过分页显示所有订单
+	function allDingdan(){
+		if (!isset($_SESSION)){
+			session_start();
+		}
+		
+		if (!isset($_SESSION['uid'])){
+			$this->load->view("webviews/nav");
+			echo "还没登陆";
+			exit();
+		}
+		$this->load->model("dingdan");
+		$count=$this->dingdan->getCount();
+		if (!$count){
+			$this->load->view("nav");
+			echo "暂时还没有订单";
+			exit();
+		}
+		$pageCount=6;
+		$from=$this->input->get("per_page")+0;
+		if (empty($from)){
+			$from=0;
+		}
+		if($res=$this->dingdan->someDd($from,$pageCount)){
+			$baseurl='http://localhost:8080/DingCan/index.php/server/showResturant/allDingdan/?';
+			$data=$this->paginagtion($pageCount,$count,$from,$res,$baseurl);
+			$this->load->view('webviews/nav');
+			$this->load->view('webviews/allDingdan',$data);
+		}
+	}
+	
 } 

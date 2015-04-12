@@ -35,24 +35,33 @@ class UserManage extends CI_Controller{
 	function verify(){
 		session_start();
 		if (isset($_SESSION['uid'])){
-			$this->load->view("webviews/nav");
-			$this->load->view('webviews/admin');
+			$this->myadmin();
 		}else{
 			$this->load->view("webviews/nav");
 	   		$this->load->view("webviews/login");
 		}
 	  	
 	}
+
 	function myadmin(){
+		if (!isset($_SESSION)){
 			session_start();
+		}
+		if (!isset($_SESSION['uid'])){
+			//验证用户登录
 			$email=$this->input->post("email",true);
 			$password=$this->input->post("password",TRUE);
 			$this->load->model('yhxt');
 			$row=$this->yhxt->checkin($email,$password);
 			if ($row ){
-			$_SESSION['uid']=$row->uid;
-			$_SESSION['email']=$row->email;
-			$resinfo=$this->yhxt->finduid($row->uid);
+				$_SESSION['uid']=$row->uid;
+				$_SESSION['email']=$row->email;
+			}else {
+				echo "login fail";
+				exit();
+			}
+			//获取用户信息并保存到session
+			$resinfo=$this->yhxt->findUid($_SESSION['uid']);
 			if ($resinfo){
 				$_SESSION['rid']=$resinfo->rid;
 				$_SESSION['rname']=$resinfo->rname;
@@ -60,32 +69,21 @@ class UserManage extends CI_Controller{
 				$_SESSION['location']=$resinfo->shen.$resinfo->shi.$resinfo->xian;
 				$image=$resinfo->image;
 				$_SESSION['image']=str_replace("10.0.2.2", "localhost", $image);
+			}else {
+				echo "获取餐厅信息失败";
+				exit();
+			}
+		}	
 				$this->load->model('rescai');
-				$limit=8;
+				$limit=4;
 				$caiinfo=$this->rescai->getList(array($_SESSION['rid'],$limit));
 				$data["caiinfo"]=$caiinfo;
 				//get dingdan list
 				$this->load->model("dingdan");
 				$dingdaninfo=$this->dingdan->dingdanList(array($_SESSION['rid'],4));
 				$data["dingdaninfo"]=$dingdaninfo;
-			}
 			$this->load->view("webviews/nav");
 			$this->load->view('webviews/admin',$data);
-			}elseif (isset($_SESSION['uid'])){
-				$this->load->model('rescai');
-				$limit=8;
-				$caiinfo=$this->rescai->getList(array($_SESSION['rid'],$limit));
-				$data["caiinfo"]=$caiinfo;
-				//get dingdan list
-				$this->load->model("dingdan");
-				$dingdaninfo=$this->dingdan->dingdanList(array($_SESSION['rid'],4));
-				$data["dingdaninfo"]=$dingdaninfo;
-				$this->load->view("webviews/nav");
-				$this->load->view('webviews/admin',$data);
-			}
-			else {
-				echo "login fail";
-			}
 	}
 //log out
 	function logout(){

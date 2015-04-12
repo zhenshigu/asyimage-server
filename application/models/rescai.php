@@ -47,4 +47,20 @@ class  Rescai extends CI_Model{
 		$query=$this->db->query($sql);
 		return $query->num_rows();
 	}
+	//获得基于vid的菜式
+	function  byVid($vid){
+		$sql="select * from caishi where vid=?";
+		$query=$this->db->query($sql,array($vid));
+		if ($query->num_rows()>0){
+			return $query->row_array();
+		}else {
+			return  FALSE;
+		}
+	}
+	//删除菜
+		function delCai($vid){
+		$sql="delete from caishi where vid=?";
+		return $this->db->query($sql,$vid);
+	}
+	//
 }

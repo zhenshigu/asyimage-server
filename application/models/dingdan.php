@@ -31,6 +31,22 @@ class  Dingdan extends CI_Model{
 		$query=$this->db->query($sql,$data);
 		return $query->result_array();
 	}
+	//分页显示订单
+	function someDd($from,$pageCount){
+		$sql="select * from dingdan  limit ?,?";
+		$query=$this->db->query($sql,array($from,$pageCount));
+		if ($query->num_rows()>0){
+			return $query->result_array();
+		}else {
+			return  FALSE;
+		}
+	}
+	//获得订单数目,用于分页
+	function getCount(){
+		$sql="select lid from dingdan";
+		$query=$this->db->query($sql);
+		return $query->num_rows();
+	}
 	//获取特定订单
 	function getDingdan($data){
 		$sql="select * from dingdan where rid=? and status<2 and xdate<?";

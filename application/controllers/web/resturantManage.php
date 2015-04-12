@@ -79,17 +79,23 @@ class  ResturantManage extends CI_Controller{
 	{
 		if (!isset($_SESSION)){
 				session_start();
-				$_SESSION['uid']=3;
 			}
+		if (!isset($_SESSION['uid'])){
+		echo "你还没登录";
+		exit();
+		}
 			$this->load->library('form_validation');
 	  		$this->form_validation->set_rules('rname', 'Rname', 'trim|required');
-		  	$this->form_validation->set_rules('telephone', 'Tel', 'trim|required|min_length[7]');
+		  	$this->form_validation->set_rules('phone', 'Tel', 'trim|required|min_length[3]');
 		  	$this->form_validation->set_rules('shen', 'Shen', 'trim|required');
 		  	$this->form_validation->set_rules('shi', 'Shi', 'trim|required');
 		  	$this->form_validation->set_rules('xian', 'Xian', 'trim|required');
 		  if ($this->form_validation->run() == FALSE)
 		  {
-		  	$this->load->view('webviews/updateRes');
+		  	$this->load->model('yhxt');
+		  	$resinfo=$this->yhxt->findUid2($_SESSION['uid']);
+		  	$this->load->view("webviews/nav");
+		  	$this->load->view('webviews/updateRes',$resinfo);
 		  }else {
 		  $data=$this->input->post();
 		  	var_dump($_FILES);
@@ -136,7 +142,22 @@ class  ResturantManage extends CI_Controller{
 			    	$data['uid']=$_SESSION['uid'];
 			    	$this->load->model('rescai');
 			    	if ($this->rescai->updateRes($data)){
-			    		echo "updating resturant  success";
+			    		//更新session里面的餐厅信息
+			    		$this->load->model("yhxt");
+			    		$resinfo=$this->yhxt->findUid($_SESSION['uid']);
+						if ($resinfo){
+							$_SESSION['rid']=$resinfo->rid;
+							$_SESSION['rname']=$resinfo->rname;
+							$_SESSION['phone']=$resinfo->telephone;
+							$_SESSION['location']=$resinfo->shen.$resinfo->shi.$resinfo->xian;
+							$image=$resinfo->image;
+							$_SESSION['image']=str_replace("10.0.2.2", "localhost", $image);
+							header("Location:http://localhost:8080/DingCan/index.php/web/userManage/myadmin");
+							}else {
+								echo "fail";
+							}
+			    	}else {
+			    		echo "fail";
 			    	}
 			    }
 			    

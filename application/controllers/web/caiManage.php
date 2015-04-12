@@ -72,19 +72,27 @@ class CaiManage extends CI_Controller{
 			}  
 		  }
 	}
-	function updateCai(){
+	function updateCai($vid){
 	if (!isset($_SESSION)){
 			session_start();
 //			$_SESSION['uid']=3;
 //			$_SESSION['vid']=1;
 		}
+		
 		$this->load->library('form_validation');
   		$this->form_validation->set_rules('vname', 'Vname', 'trim|required');
 	  	$this->form_validation->set_rules('price', 'Price', 'trim|required');
 	  	$this->form_validation->set_rules('description', 'Description', 'trim|required');
 		  if ($this->form_validation->run() == FALSE)
 		  {
-		  	$this->load->view('webviews/updateCai');
+		 	 if (isset($vid)){
+			$_SESSION['editvid']=$vid;
+			}
+		  	$this->load->model("rescai");
+		  	$row=$this->rescai->byVid($_SESSION['editvid']);
+		  	$this->load->view('webviews/nav');
+		  	$this->load->view('webviews/updateCai',$row);
+		  	
 		  }else {
 		  	$data=$this->input->post();
 		  	var_dump($_FILES);
@@ -128,7 +136,9 @@ class CaiManage extends CI_Controller{
 			     exit; 
 			    } else {
 			    	$data['imageurl']="http://10.0.2.2:8080/DingCan/resource/cai_img/{$_SESSION['uid']}{$_FILES['file']['name']}";
-			    	$data['vid']=$_SESSION['vid'];
+			    	$data['vid']=$_SESSION['editvid'];
+			    	echo $_SESSION['editvid'];
+			    	var_dump($data);
 			    	$this->load->model('rescai');
 			    	if ($this->rescai->updateCai($data)){
 			    		echo "resturant setting success";
@@ -142,5 +152,14 @@ class CaiManage extends CI_Controller{
 			   exit; 
 			}  
 		  }
+	}
+	function delCai(){
+		$vid=$this->input->post();
+		$this->load->model("rescai");
+		if ($this->rescai->delCai($vid)){
+			echo("success");
+		}else {
+			echo "fail";
+		}
 	}
 }

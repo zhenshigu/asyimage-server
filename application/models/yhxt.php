@@ -56,6 +56,16 @@ class Yhxt extends CI_Model{
 			return  FALSE;
 		}
 	}
+	//find restuant by uid
+	function findUid2($uid){
+		$sql="select * from resturant where uid=? ";
+		$query=$this->db->query($sql,array($uid));
+			if ($query->num_rows()>0){
+			return $query->row_array();
+		}else {
+			return  FALSE;
+		}
+	}
 	//find user by cid
 	function findCid($cid){
 		$sql="select * from customer where cid=? ";
