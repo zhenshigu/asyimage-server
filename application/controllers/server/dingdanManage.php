@@ -37,4 +37,32 @@ class  DingdanManage extends CI_Controller{
 			echo "null";
 		}
 	}
+	//获得订单地址
+	function getAddr(){
+		$data=$this->input->post();
+//		$data=array(1);
+		$this->load->model('dingdan');
+		$result=$this->dingdan->getAddr($data);
+		echo  json_encode($result,true);
+	}
+	//添加新的订单地址
+	function  addAddr(){
+		$data=$this->input->post();
+		$this->load->model('dingdan');
+		if ($this->dingdan->addAddr($data)){
+			echo "success";
+		}else {
+			echo "fail";
+		}
+	}
+	//删除订单地址
+	function delAddr(){
+		$data=$this->input->post();
+	$this->load->model('dingdan');
+		if ($this->dingdan->delAddr($data)){
+			echo "success";
+		}else {
+			echo "fail";
+		}
+	}
 }

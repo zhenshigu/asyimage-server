@@ -67,4 +67,20 @@ class  Dingdan extends CI_Model{
 		$sql="update resturant set newlist=0,cancellist=0";
 		$query=$this->db->query($sql);
 	}
+	//获取订单地址列表
+	function  getAddr($data){
+		$sql="select * from address where cid=?";
+		$query=$this->db->query($sql,$data);
+		return $query->result_array();
+	}
+	//添加订单地址
+	function  addAddr($data){
+		$sql="insert into address(rname,rphone,raddress,cid) values(?,?,?,?)";
+		return  $this->db->query($sql,$data);
+	}
+	//删除订单地址
+	function delAddr($data){
+		$sql="delete from address where aid=?";
+		return  $this->db->query($sql,$data);
+	}
 }
