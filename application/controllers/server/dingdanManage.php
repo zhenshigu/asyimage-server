@@ -17,6 +17,14 @@ class  DingdanManage extends CI_Controller{
 //		var_dump($bb);
 		$this->dingdan->addDingdan($aa,$bb);
 	}
+	//获得所有订单
+	function getDingdan(){
+//		$data=$this->input->post();
+		$data=array(1);
+		$this->load->model('dingdan');
+		$result=$this->dingdan->allDingdan($data);
+		echo json_encode($result,true);
+	}
 	function test(){
 		echo date("Y-m-d h:i:s",1428670773);
 	}

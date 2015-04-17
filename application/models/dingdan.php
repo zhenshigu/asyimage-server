@@ -31,6 +31,12 @@ class  Dingdan extends CI_Model{
 		$query=$this->db->query($sql,$data);
 		return $query->result_array();
 	}
+	//获取所有订单
+function allDingdan($data){
+		$sql="select * from dingdan,resturant where cid=? and dingdan.rid=resturant.rid";
+		$query=$this->db->query($sql,$data);
+		return $query->result_array();
+	}
 	//分页显示订单
 	function someDd($from,$pageCount){
 		$sql="select * from dingdan  limit ?,?";
