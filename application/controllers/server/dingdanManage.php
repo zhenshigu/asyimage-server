@@ -1,28 +1,41 @@
 <?php
 class  DingdanManage extends CI_Controller{
 	function addDingdan(){
+		error_reporting(2047);
 		$data=$this->input->post();
 		$jsonDingdan=$data['dingdan'];
 		$jsonVd=$data['vd'];
 		$dingdan=json_decode($jsonDingdan,true);
-		$jsonVd=json_decode($jsonVd,true);
+		$jsonVd=json_decode($jsonVd,true,2);
+		$cc=array();
+		for ($i=0;$i<count($jsonVd);$i++){
+			$tmp=json_decode($jsonVd[$i],true);
+			unset($tmp["price"]);
+			unset($tmp['name']);
+			array_push($cc, $tmp);
+		}
+		var_dump($dingdan);
+		var_dump($cc);
 		$this->load->model('dingdan');
-		//==========test============
-//		$a='{"destination":"dd","sum":100,"rid":1,"cid":1}';
-//
-//		$aa=json_decode($a,true);
-//		$b="[{'vid':2,'count':1},{'vid':3,'count':2}]";
-//		$bb=json_decode($b,true);
-//		var_dump($aa);
-//		var_dump($bb);
-		$this->dingdan->addDingdan($aa,$bb);
+		$this->dingdan->addDingdan($dingdan,$cc);
 	}
 	//获得所有订单
 	function getDingdan(){
-//		$data=$this->input->post();
-		$data=array(1);
+		$data=$this->input->post();
+//		$data=array(1);
 		$this->load->model('dingdan');
 		$result=$this->dingdan->allDingdan($data);
+		for($i=0;$i<count($result);$i++){
+			$result[$i]['xdate']=date("Y-m-d h:i:s",$result[$i]['xdate']);
+		}
+		echo json_encode($result,true);
+	}
+	//获取订单的具体条目
+	function getVd(){
+		$data=$this->input->post();
+//		$data=array(1);
+		$this->load->model('dingdan');
+		$result=$this->dingdan->getVd($data);
 		echo json_encode($result,true);
 	}
 	function test(){
@@ -68,6 +81,29 @@ class  DingdanManage extends CI_Controller{
 		$data=$this->input->post();
 	$this->load->model('dingdan');
 		if ($this->dingdan->delAddr($data)){
+			echo "success";
+		}else {
+			echo "fail";
+		}
+	}
+	//取消订单
+	function cancelOrder(){
+		$data=$this->input->post();
+		array_push($data, time());
+		$tmp=array();
+		$tmp=array_reverse($data);
+		$this->load->model('dingdan');
+		if ($this->dingdan->cancelOrder($tmp)){
+			echo "success";
+		}else {
+			echo "fail";
+		}
+	}
+	//确认订单
+	function confirmOrder(){
+		$data=$this->input->post();
+		$this->load->model('dingdan');
+		if ($this->dingdan->confirmOrder($data)){
 			echo "success";
 		}else {
 			echo "fail";

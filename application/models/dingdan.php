@@ -8,8 +8,8 @@ class  Dingdan extends CI_Model{
 	function addDingdan($dingdan,$vd){
 		//开始事务
 		 $this->db->trans_start();
-		 $sql1="insert into dingdan(destination,sum,rid,cid,xdate,status) values(?,?,?,?,?,?)";
-		 $sql2="insert into vd(vid,count,lid) values(?,?,?)";
+		 $sql1="insert into dingdan(sum,rid,cid,destination,xdate,status) values(?,?,?,?,?,?)";
+		 $sql2="insert into vd(count,vid,lid) values(?,?,?)";
 		 $now=time();
 		 $status="下单成功";
 		 array_push($dingdan, $now);
@@ -34,6 +34,12 @@ class  Dingdan extends CI_Model{
 	//获取所有订单
 function allDingdan($data){
 		$sql="select * from dingdan,resturant where cid=? and dingdan.rid=resturant.rid";
+		$query=$this->db->query($sql,$data);
+		return $query->result_array();
+	}
+	//获取订单的具体条目
+	function  getVd($data){
+		$sql="select * from vd,caishi where lid=? and  vd.vid=caishi.vid";
 		$query=$this->db->query($sql,$data);
 		return $query->result_array();
 	}
@@ -87,6 +93,16 @@ function allDingdan($data){
 	//删除订单地址
 	function delAddr($data){
 		$sql="delete from address where aid=?";
+		return  $this->db->query($sql,$data);
+	}
+	//取消订单
+	function  cancelOrder($data){
+		$sql="update dingdan set status=2,tdate=? where lid=?";
+		return  $this->db->query($sql,$data);
+	}
+	//确认订单
+	function  confirmOrder($data){
+		$sql="update dingdan set status=1 where lid=?";
 		return  $this->db->query($sql,$data);
 	}
 }
