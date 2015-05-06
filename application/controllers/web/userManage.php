@@ -80,7 +80,8 @@ class UserManage extends CI_Controller{
 				$data["caiinfo"]=$caiinfo;
 				//get dingdan list
 				$this->load->model("dingdan");
-				$dingdaninfo=$this->dingdan->dingdanList(array($_SESSION['rid'],4));
+				$today=strtotime(date("Y-m-d"));
+				$dingdaninfo=$this->dingdan->dingdanList(array($_SESSION['rid'],$today,4));
 				$data["dingdaninfo"]=$dingdaninfo;
 			$this->load->view("webviews/nav");
 			$this->load->view('webviews/admin',$data);

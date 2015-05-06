@@ -4,7 +4,12 @@
 		function getResByPlace($place=""){
 			$start=(int)$this->input->post("start");
 			$num=(int)$this->input->post("num");
-			$place=array("广东","普宁","流沙",$start,$num);
+			$shen=$this->input->post("shen");
+			$shi=$this->input->post("shi");
+			$xian=$this->input->post("xian");
+			
+//			$place=array("广东","普宁","流沙",$start,$num);
+			$place=array($shen,$shi,$xian,$start,$num);
 			$this->load->database();
 			$sql="select * from resturant where  shen=? and shi=? and xian=? limit ?,?";
 			$query=$this->db->query($sql,$place);
@@ -23,8 +28,10 @@
 					array_push($arr, $tmp);
 				}
 				echo 	json_encode($arr);
+//				echo $shen.$shi.$xian;
 				//var_dump($arr);
 			}
+			
 		}
 		//获取餐厅菜单
 		function getCaiByRes(){

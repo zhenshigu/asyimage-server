@@ -27,7 +27,7 @@ class  Dingdan extends CI_Model{
 	}
 	//获取有限订单列表
 	function dingdanList($data){
-		$sql="select * from dingdan where rid=? limit ?";
+		$sql="select * from dingdan where rid=? and xdate>? order by xdate desc    limit ? ";
 		$query=$this->db->query($sql,$data);
 		return $query->result_array();
 	}
@@ -61,7 +61,7 @@ function allDingdan($data){
 	}
 	//获取特定订单
 	function getDingdan($data){
-		$sql="select * from dingdan where rid=? and status<2 and xdate<?";
+		$sql="select * from dingdan where rid=? and status<2 and xdate>? order by xdate desc";
 		$query=$this->db->query($sql,$data);
 		return $query->result_array();
 	}

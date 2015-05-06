@@ -51,6 +51,9 @@ class  DingdanManage extends CI_Controller{
 				$today=strtotime(date("Y-m-d"));
 				array_push($data, $today);
 				$dingdaninfo=$this->dingdan->getDingdan($data);
+				for ($i=0;$i<count($dingdaninfo);$i++){
+					$dingdaninfo[$i]['xdate']=date('Y-m-d h:i:s',$dingdaninfo[$i]['xdate']);
+				}
 				$this->dingdan->reset();
 		    	echo   json_encode($dingdaninfo);
 			}
