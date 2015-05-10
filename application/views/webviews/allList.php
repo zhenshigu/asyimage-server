@@ -10,12 +10,14 @@
 		  <div class="panel-body">
 		    <table class="table table-striped table-hover">
 		    		<?php 
-		    				foreach ($list as $cai){
-		    					$imgurl=str_replace("10.0.2.2", "localhost", $cai['imageurl']);
-		    					echo  "<tr><td><img src=$imgurl width='50px' height='50px'></td><td>{$cai['vname']}</td><td>价格:{$cai['price']}</td><td>描述:{$cai['descrition']}</td>";
-		    					echo '<td><button  type="button" class="btn btn-primary col-md-offset-9 editcai"> 编辑</button><input type="hidden" id="cid" value='.$cai['vid'].'></td>
-		    					<td><button  type="button" class="btn btn-danger  delcai"> 删除</button><input type="hidden" id="cid2" value='.$cai['vid'].'></td></tr>';
-		    				}
+				    		if (isset($list)){//20150508modify
+					    		foreach ($list as $cai){
+			    					$imgurl=str_replace("10.0.2.2", "localhost", $cai['imageurl']);
+			    					echo  "<tr><td><img src=$imgurl width='50px' height='50px'></td><td>{$cai['vname']}</td><td>价格:{$cai['price']}</td><td>描述:{$cai['descrition']}</td>";
+			    					echo '<td><button  type="button" class="btn btn-primary col-md-offset-9 editcai"> 编辑</button><input type="hidden" id="cid" value='.$cai['vid'].'></td>
+			    					<td><button  type="button" class="btn btn-danger  delcai"> 删除</button><input type="hidden" id="cid2" value='.$cai['vid'].'></td></tr>';
+			    				}
+				    		}
 		    		?>
 			</table>
 		  </div>
@@ -26,7 +28,11 @@
 <div class="row">
 	<!-- frist column-->
 	<div class="col-md-7 col-md-offset-5">
-	<?php echo $navigation;?>
+	<?php // 20150508 modify
+		if (isset($navigation)){
+			echo $navigation;
+		}
+	 ?>
 	</div>
 </div>
 </div>

@@ -106,6 +106,7 @@
 </div>
 <!-- second row end -->
 </div>
+<input type="hidden" id="therid" value=<?php echo $_SESSION['rid'] ?> />
 <script>
 	$(function(){
 			$("#myexit").click(function(){
@@ -134,10 +135,11 @@
 		interval = setInterval(hasnews, "10000"); 
 	}
 	function hasnews(){
+			var rid=$("#therid").val();
 			$.ajax({
 					url:"http://localhost:8080/DingCan/index.php/server/dingdanManage/hasnews",
 					type:"post",
-					data:{"rid":"1"},
+					data:{"rid":rid},
 					dataType:"json",
 					success:function(data){
 						var str='<table class="table table-striped table-hover">';

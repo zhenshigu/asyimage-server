@@ -89,18 +89,19 @@
 			exit();
 		}
 		$this->load->model("rescai");
-		$count=$this->rescai->getCount();
+		$count=$this->rescai->getCount(array($_SESSION['rid']));//20150508修改，添加rid参数
 		if (!$count){
-			$this->load->view("nav");
+			$this->load->view('webviews/nav');
+			$this->load->view('webviews/allList');
 			echo "暂时还没有添加菜单";
-			exit();
+			return ;
 		}
 		$pageCount=6;
 		$from=$this->input->get("per_page")+0;
 		if (empty($from)){
 			$from=0;
 		}
-		if($res=$this->rescai->someCai($from,$pageCount)){
+		if($res=$this->rescai->someCai($_SESSION['rid'],$from,$pageCount)){//20150508修改，添加rid参数
 			$baseurl='http://localhost:8080/DingCan/index.php/server/showResturant/alllist/?';
 			$data=$this->paginagtion($pageCount,$count,$from,$res,$baseurl);
 			$this->load->view('webviews/nav');
@@ -119,7 +120,7 @@
 			exit();
 		}
 		$this->load->model("dingdan");
-		$count=$this->dingdan->getCount();
+		$count=$this->dingdan->getCount(array($_SESSION['rid']));
 		if (!$count){
 			$this->load->view("nav");
 			echo "暂时还没有订单";
@@ -130,7 +131,7 @@
 		if (empty($from)){
 			$from=0;
 		}
-		if($res=$this->dingdan->someDd($from,$pageCount)){
+		if($res=$this->dingdan->someDd($_SESSION['rid'],$from,$pageCount)){
 			$baseurl='http://localhost:8080/DingCan/index.php/server/showResturant/allDingdan/?';
 			$data=$this->paginagtion($pageCount,$count,$from,$res,$baseurl);
 			$this->load->view('webviews/nav');

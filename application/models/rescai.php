@@ -32,9 +32,9 @@ class  Rescai extends CI_Model{
 		return $query->result_array();
 	}
 	//获得某个范围的菜单，用于分页
-	function someCai($from,$pageCount){
-		$sql="select * from caishi  limit ?,?";
-		$query=$this->db->query($sql,array($from,$pageCount));
+	function someCai($rid,$from,$pageCount){
+		$sql="select * from caishi where rid=?  limit ?,?";
+		$query=$this->db->query($sql,array($rid,$from,$pageCount));
 		if ($query->num_rows()>0){
 			return $query->result_array();
 		}else {
@@ -42,9 +42,10 @@ class  Rescai extends CI_Model{
 		}
 	}
 	//获得菜单数目
-	function getCount(){
-		$sql="select * from caishi";
-		$query=$this->db->query($sql);
+	//20150508修改，指定餐厅rid
+	function getCount($data){
+		$sql="select * from caishi where rid=?";
+		$query=$this->db->query($sql,$data);
 		return $query->num_rows();
 	}
 	//获得基于vid的菜式

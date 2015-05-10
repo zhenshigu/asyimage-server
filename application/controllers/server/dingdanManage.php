@@ -42,8 +42,8 @@ class  DingdanManage extends CI_Controller{
 		echo date("Y-m-d h:i:s",1428670773);
 	}
 	function hasnews(){
-//		$data=$this->input->post();
-		$data=array(1);
+		$data=$this->input->post();
+//		$data=array(1);
 		$this->load->model('dingdan');
 		$row=$this->dingdan->hasnews($data);
 		if ($row){
@@ -92,7 +92,8 @@ class  DingdanManage extends CI_Controller{
 	//取消订单
 	function cancelOrder(){
 		$data=$this->input->post();
-		array_push($data, time());
+//		array_push($data, time());
+		$data['mytime']=time();
 		$tmp=array();
 		$tmp=array_reverse($data);
 		$this->load->model('dingdan');

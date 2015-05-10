@@ -44,9 +44,9 @@ function allDingdan($data){
 		return $query->result_array();
 	}
 	//分页显示订单
-	function someDd($from,$pageCount){
-		$sql="select * from dingdan  limit ?,?";
-		$query=$this->db->query($sql,array($from,$pageCount));
+	function someDd($rid,$from,$pageCount){//20150508增加rid参数
+		$sql="select * from dingdan where rid=?  limit ?,?";
+		$query=$this->db->query($sql,array($rid,$from,$pageCount));
 		if ($query->num_rows()>0){
 			return $query->result_array();
 		}else {
@@ -54,14 +54,14 @@ function allDingdan($data){
 		}
 	}
 	//获得订单数目,用于分页
-	function getCount(){
-		$sql="select lid from dingdan";
-		$query=$this->db->query($sql);
+	function getCount($data){
+		$sql="select lid from dingdan where rid=?";//20150508增加rid参数
+		$query=$this->db->query($sql,$data);
 		return $query->num_rows();
 	}
 	//获取特定订单
 	function getDingdan($data){
-		$sql="select * from dingdan where rid=? and status<2 and xdate>? order by xdate desc";
+		$sql="select * from dingdan where rid=?  and xdate>? order by xdate desc";
 		$query=$this->db->query($sql,$data);
 		return $query->result_array();
 	}
@@ -98,7 +98,10 @@ function allDingdan($data){
 	//取消订单
 	function  cancelOrder($data){
 		$sql="update dingdan set status=2,tdate=? where lid=?";
-		return  $this->db->query($sql,$data);
+	   $this->db->query($sql,array($data["mytime"],$data["lid"]));
+	   //设置rid的newlist为1
+		$sql3="update resturant set cancellist=1 where rid=?";
+		return  $this->db->query($sql3,array($data["rid"]));
 	}
 	//确认订单
 	function  confirmOrder($data){

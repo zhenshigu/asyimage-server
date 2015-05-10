@@ -1,4 +1,4 @@
-
+<?php header("Content-Type:text/html;charset=utf-8");?>
 <meta charset="utf-8">
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">

@@ -57,6 +57,7 @@ class UserManage extends CI_Controller{
 				$_SESSION['uid']=$row->uid;
 				$_SESSION['email']=$row->email;
 			}else {
+				$this->load->view("webviews/nav");
 				echo "login fail";
 				exit();
 			}
@@ -70,8 +71,10 @@ class UserManage extends CI_Controller{
 				$image=$resinfo->image;
 				$_SESSION['image']=str_replace("10.0.2.2", "localhost", $image);
 			}else {
-				echo "获取餐厅信息失败";
-				exit();
+				$this->load->view("webviews/nav");
+//				$this->load->view("webviews/resturant");
+				$this->setResturant();
+				return ;
 			}
 		}	
 				$this->load->model('rescai');
@@ -82,6 +85,7 @@ class UserManage extends CI_Controller{
 				$this->load->model("dingdan");
 				$today=strtotime(date("Y-m-d"));
 				$dingdaninfo=$this->dingdan->dingdanList(array($_SESSION['rid'],$today,4));
+				$this->dingdan->reset();//20150510 重置餐厅状态
 				$data["dingdaninfo"]=$dingdaninfo;
 			$this->load->view("webviews/nav");
 			$this->load->view('webviews/admin',$data);
@@ -91,5 +95,89 @@ class UserManage extends CI_Controller{
 		session_start();
 		session_destroy();
 		$this->verify();
+	}
+	//设置餐厅信息
+	function setResturant(){
+		if (!isset($_SESSION)){
+			session_start();
+		}
+		$this->load->library('form_validation');
+  		$this->form_validation->set_rules('rname', 'Rname', 'trim|required');
+	  	$this->form_validation->set_rules('telephone', 'Tel', 'trim|required|min_length[7]');
+//	  	$this->form_validation->set_rules('shen', 'Shen', 'trim|required');
+//	  	$this->form_validation->set_rules('shi', 'Shi', 'trim|required');
+//	  	$this->form_validation->set_rules('xian', 'Xian', 'trim|required');
+		  if ($this->form_validation->run() == FALSE)
+		  {
+		  	$this->load->view("webviews/nav");
+		  	$this->load->view('webviews/resturant');
+		  }else {
+		  	$this->load->view("webviews/nav");
+		  	$data=$this->input->post();
+		  	var_dump($_FILES);
+//			var_dump($data);
+		  	if($_FILES['file']['error'] > 0){ 
+					   echo '!problem:'; 
+					   switch($_FILES['file']['error']) 
+					   { 
+					     case 1: echo '文件大小超过服务器限制'; 
+					             break; 
+					     case 2: echo '文件太大！'; 
+					             break; 
+					     case 3: echo '文件只加载了一部分！'; 
+					             break; 
+					     case 4: echo '文件加载失败！'; 
+					             break; 
+					   } 
+					   exit; 
+			} 
+			if($_FILES['file']['size'] > 1000000){ 
+			   echo '文件过大！'; 
+			   exit; 
+			} 
+			if($_FILES['file']['type']!='image/jpeg' && $_FILES['file']['type']!='image/gif'){ 
+			   echo '文件不是JPG或者GIF图片！'; 
+			   exit; 
+			} 
+			$filetype = $_FILES['file']['type']; 
+			if($filetype == 'image/jpeg'){ 
+			  $type = '.jpg'; 
+			} 
+			if($filetype == 'image/gif'){ 
+			  $type = '.gif'; 
+			}  
+			$upfile = '/var/www/DingCan/resource/res_img/'.$_SESSION['uid'].$_FILES['file']['name']; 
+			if(is_uploaded_file($_FILES['file']['tmp_name'])) 
+			{ 
+			   if(!move_uploaded_file($_FILES['file']['tmp_name'], $upfile)) 
+			   { 
+			     echo '移动文件失败！'; 
+			     exit; 
+			    } else {
+			    	$data['image']="http://10.0.2.2:8080/DingCan/resource/res_img/{$_SESSION['uid']}{$_FILES['file']['name']}";
+			    	$data['uid']=$_SESSION['uid'];
+			    	$this->load->model('rescai');
+			    	if ($this->rescai->setRes($data)){
+			    		echo "resturant setting success";
+			    		$this->load->model('yhxt');
+				    	$resinfo=$this->yhxt->findUid($_SESSION['uid']);
+						if ($resinfo){
+							$_SESSION['rid']=$resinfo->rid;
+							$_SESSION['rname']=$resinfo->rname;
+							$_SESSION['phone']=$resinfo->telephone;
+							$_SESSION['location']=$resinfo->shen.$resinfo->shi.$resinfo->xian;
+							$image=$resinfo->image;
+							$_SESSION['image']=str_replace("10.0.2.2", "localhost", $image);
+						}
+			    	}
+			    }
+			    
+			} 
+			else 
+			{ 
+			   echo 'problem!'; 
+			   exit; 
+			}  
+		 }
 	}
 }
