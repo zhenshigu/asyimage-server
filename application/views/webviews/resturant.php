@@ -4,21 +4,31 @@
 <body>
 
 <?php echo validation_errors(); ?>
-<form enctype="multipart/form-data" action="setResturant" method="post" >
-
-
-<h5>name</h5>
-<input type="text" name="rname" value="" size="50" />
-
-<h5>telephone </h5>
-<input type="text" name="telephone" value="" size="50" />
-
-<h5>shen </h5>
-<input type="text" name="shen" value="" size="50" />
-shi<input type="text" name="shi" value="" size="50" />
-xian<input type="text" name="xian" value="" size="50" />
-image<input name="file" type="file">  
-<div><input type="submit" value="Submit" /></div>
+<div class="col-md-7 ">
+<form enctype="multipart/form-data" action="setResturant"   method="post">
+  <div class="form-group">
+    <label for="rname">餐厅名字</label>
+    <input type="text" class="form-control"  id="rname"  name="rname">
+  </div>
+  <div class="form-group">
+    <label for="telephone">订餐电话</label>
+    <input type="text" class="form-control" id="telephone" name="telephone">
+  </div>
+   <div class="form-group">
+    <label for="shen">所在省</label>
+    <input type="text" class="form-control" id="shen"   name="shen">
+  </div>
+     <div class="form-group">
+    <label for="shi">所在市</label>
+    <input type="text" class="form-control" id="shi"   name="shi">
+  </div>
+     <div class="form-group">
+    <label for="xian">所在县</label>
+    <input type="text" class="form-control" id="xian"   name="xian">
+  </div>
+   餐厅头像<input name="file" type="file"> <br><br>
+  <button type="submit" class="btn btn-primary">提交</button>
 </form>
+</div>
 </body>
 </html>

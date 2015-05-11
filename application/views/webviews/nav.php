@@ -49,9 +49,8 @@ body {
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">Default</a></li>
-            <li><a href="../navbar-static-top/">Static top</a></li>
-            <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
+            <li><a href="http://localhost:8080/DingCan/index.php/web/userManage/addUser">注册</a></li>
+             <li><a href="http://localhost:8080/DingCan/index.php/web/userManage/verify">登录</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

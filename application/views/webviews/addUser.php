@@ -1,22 +1,20 @@
-<html>
-<head>
-</head>
-<body>
-
 <?php echo validation_errors(); ?>
-<form action="addUser" method="post">
-
-
-<h5>Password</h5>
-<input type="text" name="password" value="" size="50" />
-
-<h5>Password Confirm</h5>
-<input type="text" name="passconf" value="" size="50" />
-
-<h5>Email Address</h5>
-<input type="text" name="email" value="" size="50" />
-
-<div><input type="submit" value="Submit" /></div>
+<div class="col-md-7 ">
+<form action="addUser"   method="post">
+  <div class="form-group">
+    <label for="password">密码</label>
+    <input type="password" class="form-control"  id="password"  name="password">
+  </div>
+  <div class="form-group">
+    <label for="passconf">重复密码</label>
+    <input type="password" class="form-control" id="passconf" name="passconf">
+  </div>
+   <div class="form-group">
+    <label for="email">邮箱</label>
+    <input type="text" class="form-control" id="email"   name="email">
+  </div>
+  <button type="submit" class="btn btn-primary">提交</button>
 </form>
+</div>
 </body>
 </html>

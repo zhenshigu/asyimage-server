@@ -11,6 +11,7 @@ class UserManage extends CI_Controller{
 	  	$this->form_validation->set_rules('passconf', 'Password Confirmation', 'trim|required|min_length[6]');
 	  if ($this->form_validation->run() == FALSE)
 		  {
+		  	$this->load->view("webviews/nav");
 		   $this->load->view('webviews/addUser.php');
 		  }
 		  else
@@ -24,9 +25,11 @@ class UserManage extends CI_Controller{
 //		var_dump($info);
 			$this->load->model('yhxt');
 			if ($this->yhxt->register($info)){
+				$this->load->view("webviews/nav");
 				$this->load->view('webviews/addUserSuccess');
 			}else {
-				echo "fail";
+				$this->load->view("webviews/nav");
+				echo "添加失败";
 			}
 		   
 		  }
@@ -47,6 +50,7 @@ class UserManage extends CI_Controller{
 		if (!isset($_SESSION)){
 			session_start();
 		}
+		$this->load->model('yhxt');
 		if (!isset($_SESSION['uid'])){
 			//验证用户登录
 			$email=$this->input->post("email",true);
@@ -62,6 +66,21 @@ class UserManage extends CI_Controller{
 				exit();
 			}
 			//获取用户信息并保存到session
+//			$resinfo=$this->yhxt->findUid($_SESSION['uid']);
+//			if ($resinfo){
+//				$_SESSION['rid']=$resinfo->rid;
+//				$_SESSION['rname']=$resinfo->rname;
+//				$_SESSION['phone']=$resinfo->telephone;
+//				$_SESSION['location']=$resinfo->shen.$resinfo->shi.$resinfo->xian;
+//				$image=$resinfo->image;
+//				$_SESSION['image']=str_replace("10.0.2.2", "localhost", $image);
+//			}else {
+//				$this->load->view("webviews/nav");
+//				$this->setResturant();
+//				return ;
+//			}
+		}	
+//获取用户信息并保存到session
 			$resinfo=$this->yhxt->findUid($_SESSION['uid']);
 			if ($resinfo){
 				$_SESSION['rid']=$resinfo->rid;
@@ -72,11 +91,9 @@ class UserManage extends CI_Controller{
 				$_SESSION['image']=str_replace("10.0.2.2", "localhost", $image);
 			}else {
 				$this->load->view("webviews/nav");
-//				$this->load->view("webviews/resturant");
 				$this->setResturant();
 				return ;
 			}
-		}	
 				$this->load->model('rescai');
 				$limit=4;
 				$caiinfo=$this->rescai->getList(array($_SESSION['rid'],$limit));
@@ -114,7 +131,7 @@ class UserManage extends CI_Controller{
 		  }else {
 		  	$this->load->view("webviews/nav");
 		  	$data=$this->input->post();
-		  	var_dump($_FILES);
+//		  	var_dump($_FILES);
 //			var_dump($data);
 		  	if($_FILES['file']['error'] > 0){ 
 					   echo '!problem:'; 
@@ -158,7 +175,8 @@ class UserManage extends CI_Controller{
 			    	$data['uid']=$_SESSION['uid'];
 			    	$this->load->model('rescai');
 			    	if ($this->rescai->setRes($data)){
-			    		echo "resturant setting success";
+			    		$this->load->view("webviews/nav");
+			    		echo "餐厅设置成功";
 			    		$this->load->model('yhxt');
 				    	$resinfo=$this->yhxt->findUid($_SESSION['uid']);
 						if ($resinfo){
