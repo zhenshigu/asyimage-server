@@ -3,7 +3,7 @@ class UserManage extends CI_Controller{
 	function  __construct(){
 		parent::__construct();
 	}
-	//add the user
+	//餐厅注册，添加用户
 	function addUser(){
   		$this->load->library('form_validation');
   		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
@@ -34,12 +34,12 @@ class UserManage extends CI_Controller{
 		   
 		  }
 	}
-	//verify the user
+	//登录验证
 	function verify(){
 		session_start();
 		if (isset($_SESSION['uid'])){
-			$this->myadmin();
-		}else{
+			$this->myadmin();//如果已经登录过就调用myadmin函数
+		}else{//否则跳转到登录页面
 			$this->load->view("webviews/nav");
 	   		$this->load->view("webviews/login");
 		}
