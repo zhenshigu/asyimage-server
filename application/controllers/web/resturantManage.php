@@ -62,7 +62,8 @@ class  ResturantManage extends CI_Controller{
 			    	$data['uid']=$_SESSION['uid'];
 			    	$this->load->model('rescai');
 			    	if ($this->rescai->setRes($data)){
-			    		echo "resturant setting success";
+			    		$this->load->view("webviews/nav");
+			    		echo "餐厅设置成功";
 			    	}
 			    }
 			    
@@ -138,7 +139,7 @@ class  ResturantManage extends CI_Controller{
 			     echo '移动文件失败！'; 
 			     exit; 
 			    } else {
-			    	$data['image']="http://localhost:8080/DingCan/resource/res_img/{$_SESSION['uid']}{$_FILES['file']['name']}";
+			    	$data['image']="http://10.0.2.2:8080/DingCan/resource/res_img/{$_SESSION['uid']}{$_FILES['file']['name']}";
 			    	$data['uid']=$_SESSION['uid'];
 			    	$this->load->model('rescai');
 			    	if ($this->rescai->updateRes($data)){

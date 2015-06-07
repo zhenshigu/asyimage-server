@@ -122,7 +122,7 @@
 		$this->load->model("dingdan");
 		$count=$this->dingdan->getCount(array($_SESSION['rid']));
 		if (!$count){
-			$this->load->view("nav");
+			$this->load->view("webviews/nav");
 			echo "暂时还没有订单";
 			exit();
 		}
@@ -138,5 +138,23 @@
 			$this->load->view('webviews/allDingdan',$data);
 		}
 	}
-	
+	//显示订单详情
+	function dingdanDetail($lid){
+//		$lid=$this->input->get();
+		$this->load->model("dingdan");
+		$result=$this->dingdan->getVd($lid);
+		$data['detail']=$result;
+		$this->load->view('webviews/nav');
+		$this->load->view('webviews/dingdanDetail',$data);
+	}
+	//关于
+	function theAbout(){
+		$this->load->view('webviews/nav');
+		$this->load->view("webviews/about");
+	}
+	//联系方式
+	function contact(){
+		$this->load->view('webviews/nav');
+		$this->load->view("webviews/contact");
+	}
 } 

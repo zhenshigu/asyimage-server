@@ -23,10 +23,12 @@
 			    						$status="订单取消";
 			    						break;
 			    				}
-		    					echo  "<tr><td>订单编号:{$cai['lid']}</td><td>下单时间:$xdate</td>
+			    				$mylid=$cai['lid'];
+		    					echo  "<tr><td><a href='http://localhost:8080/DingCan/index.php/server/showResturant/dingdanDetail/$mylid'>订单编号:{$cai['lid']}</td></a><td>下单时间:$xdate</td>
 		    					<td>订单状态:$status</td>
 		    					<td>总价:{$cai['sum']}</td>
 		    					<td>送货地址:{$cai['destination']}</td>
+		    					
 		    					</tr>";
 		    				}
 		    		?>

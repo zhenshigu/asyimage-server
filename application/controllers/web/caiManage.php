@@ -95,7 +95,7 @@ class CaiManage extends CI_Controller{
 		  	
 		  }else {
 		  	$data=$this->input->post();
-		  	var_dump($_FILES);
+//		  	var_dump($_FILES);
 //			var_dump($data);
 		  	if($_FILES['file']['error'] > 0){ 
 					   echo '!problem:'; 
@@ -137,11 +137,12 @@ class CaiManage extends CI_Controller{
 			    } else {
 			    	$data['imageurl']="http://10.0.2.2:8080/DingCan/resource/cai_img/{$_SESSION['uid']}{$_FILES['file']['name']}";
 			    	$data['vid']=$_SESSION['editvid'];
-			    	echo $_SESSION['editvid'];
-			    	var_dump($data);
+//			    	echo $_SESSION['editvid'];
+//			    	var_dump($data);
 			    	$this->load->model('rescai');
 			    	if ($this->rescai->updateCai($data)){
-			    		echo "resturant setting success";
+			    		$this->load->view("webviews/nav");
+			    		echo "<center><a href='http://localhost:8080/DingCan/index.php/server/showResturant/alllist'>菜式更改成功，点击返回</a></center>";
 			    	}
 			    }
 			    

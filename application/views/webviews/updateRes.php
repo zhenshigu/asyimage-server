@@ -6,23 +6,23 @@
 <form enctype="multipart/form-data"  method="post">
   <div class="form-group">
     <label for="vname">餐厅名</label>
-    <input type="text" class="form-control" id="rname" placeholder='<?php echo $rname?>'  name="rname">
+    <input type="text" class="form-control" id="rname" value='<?php echo $rname?>'  name="rname">
   </div>
   <div class="form-group">
     <label for="price">订餐电话</label>
-    <input type="text" class="form-control" id="phone" placeholder="<?php echo $telephone?>" name="phone">
+    <input type="text" class="form-control" id="phone" value="<?php echo $telephone?>" name="phone">
   </div>
    <div class="form-group">
     <label for="descrition">省</label>
-    <input type="text" class="form-control" id="shen" placeholder="<?php echo $shen?>" name="shen">
+    <input type="text" class="form-control" id="shen" value="<?php echo $shen?>" name="shen">
   </div>
      <div class="form-group">
     <label for="descrition">市</label>
-    <input type="text" class="form-control" id="shi" placeholder="<?php echo $shi?>" name="shi">
+    <input type="text" class="form-control" id="shi" value="<?php echo $shi?>" name="shi">
   </div>
      <div class="form-group">
     <label for="descrition">县</label>
-    <input type="text" class="form-control" id="xian" placeholder="<?php echo $xian?>" name="xian">
+    <input type="text" class="form-control" id="xian" value="<?php echo $xian?>" name="xian">
   </div>
   <div class="form-group">
     <label for="exampleInputFile">新图片上传</label>

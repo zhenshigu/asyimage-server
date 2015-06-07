@@ -7,7 +7,7 @@
 		<div class="panel panel-default">
 		  <div class="panel-heading">
 		    <h3 class="panel-title">用户信息
-		    	<button type="button" class="btn btn-primary col-md-offset-8">设置</button>
+		    	<button type="button" class="btn btn-primary col-md-offset-8" id="resset">设置</button>
 		    </h3>
 		  </div>
 		  <div class="panel-body">
@@ -46,15 +46,15 @@
 <form enctype="multipart/form-data"  method="post">
   <div class="form-group">
     <label for="vname">菜名</label>
-    <input type="text" class="form-control" id="vname" placeholder='<?php echo $vname?>'  name="vname">
+    <input type="text" class="form-control" id="vname" value='<?php echo $vname?>'  name="vname">
   </div>
   <div class="form-group">
     <label for="price">价格</label>
-    <input type="text" class="form-control" id="price" placeholder="<?php echo $price?>" name="price">
+    <input type="text" class="form-control" id="price"  value="<?php echo $price?>" name="price">
   </div>
    <div class="form-group">
     <label for="descrition">描述</label>
-    <input type="text" class="form-control" id="description" placeholder="<?php echo $descrition?>" name="description">
+    <input type="text" class="form-control" id="description" value="<?php echo $descrition?>" name="description">
   </div>
   <div class="form-group">
     <label for="exampleInputFile">新图片上传</label>
@@ -66,3 +66,16 @@
 </div>
 </div>
 </div>
+<script>
+$(function(){
+	$("#myexit").click(function(){
+		window.location.href="http://localhost:8080/DingCan/index.php/web/userManage/logout";  
+	})
+})
+$(function(){
+	$("#resset").click(function(){
+		window.location.href="http://localhost:8080/DingCan/index.php/web/resturantManage/updateResturant";  
+	})
+})
+</script>
+
